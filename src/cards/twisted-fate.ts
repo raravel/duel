@@ -18,7 +18,7 @@ export class TwistedFate extends Card {
 		];
 
 		const frontCoin = tossResult.filter(c => c === 0);
-		this.player.history.log(`코인 토스 결과: ${frontCoin.map(c => c === 0 ? '[앞]' : '[뒤]').join(', ')}`)
+		this.player.history.log(`코인 토스 결과: ${tossResult.map(c => c === 0 ? '[앞]' : '[뒤]').join(', ')}`)
 		if ( frontCoin.length === 0 ) {
 			const damage = this.player.hitDamage(1000, DamageType.Fixed);
 			this.player.hitted(damage);

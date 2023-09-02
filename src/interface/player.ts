@@ -1,19 +1,22 @@
-import { HistoryInstance } from "src/utils/history";
+import { HistoryInstance } from "../utils/history";
 import { EventBinder } from "../utils/event-binder";
 import { PlayerBuff } from "./buff";
 import { DamageType } from "../const/damage-type";
 import { GameEvents } from "../const/game-event";
 import { Card } from "./card";
-import { Reaper } from "src/cards/reaper";
+import { Reaper } from "../cards/reaper";
+import { Class } from "./constructable";
 
 
 export class Player extends EventBinder {
 	public name: string = '';
 	public hash: string = '';
+	public opponent!: Player;
 
-	public defaultHp = 8000;
+	public defaultHp = 3000;
 	public hp: number = this.defaultHp;
 	public defaultAttack: number = 500;
+	public history!: HistoryInstance;
 
 	public buffs: PlayerBuff = new PlayerBuff(this); // 버프
 	public debuffs: any[] = []; // 디버프
@@ -25,14 +28,32 @@ export class Player extends EventBinder {
 
 	public engraves: any[] = []; // 각인 리스트
 
-	public hand: Card[] = []; // 손 패
+	private _hand: Card[] = []; // 손 패
 
-	constructor(public history: HistoryInstance) {
-		super();
+	public get hand(): Card[] {
+		return this._hand
+			.sort((a, b) => a.priority === b.priority ? 0 : a.priority > b.priority ? 1 : -1);
+	}
+
+	public set hand(value: Card[]) {
+		this._hand = value;
 	}
 
 	public get isDead(): boolean {
 		return this.hp <= 0;
+	}
+
+	public deckAdd(CardConstructor: Class<Card>): void {
+		const card = new CardConstructor(this);
+		this.deck.push(card);
+	}
+
+	public useCard(card: Card, notUse: boolean = false): void {
+		if ( !notUse ) {
+			this.history.log(`[${card.name}]카드 사용.`);
+			card.trigger(this.opponent);
+		}
+		this.usedCardList.push(card);
 	}
 
 	// 플레이어가 피격시 방어력 감소 버프 등으로 계산되는 데미지

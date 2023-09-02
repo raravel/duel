@@ -33,5 +33,9 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/raravel/typescript-template.git"
+	},
+	"dependencies": {
+		"debug": "^4.3.4",
+		"lodash": "^4.17.21"
 	}
 }

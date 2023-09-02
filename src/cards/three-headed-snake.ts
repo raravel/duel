@@ -1,7 +1,7 @@
 import { CardTypes } from "../const/card-type";
 import { Card } from "../interface/card";
 import { Priority } from "../const/priority";
-import { Player } from "src/interface/player";
+import { Player } from "../interface/player";
 
 export class ThreeHeadedSnake extends Card {
 	public name = '삼두사';
@@ -15,6 +15,8 @@ export class ThreeHeadedSnake extends Card {
 		attacked.push(opponent.hitDamage(realDamage));
 		attacked.push(opponent.hitDamage(realDamage));
 		attacked.push(opponent.hitDamage(realDamage));
+
+		console.log(this.player.history.uuid, this.player.history, attacked);
 
 		this.player.history.log(`${opponent.name}에게 ${attacked.join(',')}데미지를 입혔습니다.`);
 	}
