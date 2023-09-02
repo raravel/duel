@@ -25,6 +25,7 @@ export class CorrosionBuff extends ReducesArmorBuff {
 	deinitialize(): void {
 		this.player.delete(GameEvents.PLAYER_TURN_START, this.onTurnStart);
 		this.player.buffs.delete(this);
+		this.player.history.detail(`[${this.player.name}] 님의 [${this.name}] 버프가 사라졌습니다.`);
 	}
 	
 }
@@ -55,5 +56,6 @@ export class CorrosionDrawBuff extends Buff {
 	deinitialize(): void {
 		this.player.buffs.delete(this);
 		this.player.delete(GameEvents.PLAYER_TURN_START, this.onTurnStart);
+		this.player.history.detail(`[${this.player.name}] 님의 [${this.name}] 버프가 사라졌습니다.`);
 	}
 }

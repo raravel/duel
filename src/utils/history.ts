@@ -16,7 +16,7 @@ interface HistoryItem {
 
 export class HistoryInstance {
 	public uuid = randomUUID();
-	private history: HistoryItem[] = [];
+	public history: HistoryItem[] = [];
 
 	push(level: HistoryLevel, message: string) {
 		debug(`[${level}] ${message}`);

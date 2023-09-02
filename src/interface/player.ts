@@ -1,11 +1,12 @@
 import { HistoryInstance } from "../utils/history";
 import { EventBinder } from "../utils/event-binder";
-import { PlayerBuff } from "./buff";
+import { EnhancedArmorBuff, EnhancedDamageBuff, PlayerBuff, ReducesArmorBuff, ReducesDamageBuff } from "./buff";
 import { DamageType } from "../const/damage-type";
 import { GameEvents } from "../const/game-event";
 import { Card } from "./card";
 import { Reaper } from "../cards/reaper";
 import { Class } from "./constructable";
+import { BuffCalcType, BuffType } from "../const/buff-type";
 
 
 export class Player extends EventBinder {
@@ -32,7 +33,7 @@ export class Player extends EventBinder {
 
 	public get hand(): Card[] {
 		return this._hand
-			.sort((a, b) => a.priority === b.priority ? 0 : a.priority > b.priority ? 1 : -1);
+			.sort((a, b) => a.priority === b.priority ? 0 : a.priority > b.priority ? -1 : 1);
 	}
 
 	public set hand(value: Card[]) {
@@ -57,17 +58,59 @@ export class Player extends EventBinder {
 	}
 
 	// 플레이어가 피격시 방어력 감소 버프 등으로 계산되는 데미지
-	public hitDamage(damage: number, damageType: DamageType = DamageType.Normal) {
+	public hitDamage(originalDamage: number, damageType: DamageType = DamageType.Normal) {
+		let damage = originalDamage;
 		if ( damageType === DamageType.Normal ) {
+			const reduces = this.buffs.get(BuffType.ReducesArmor) as ReducesArmorBuff[];
+			reduces.forEach((buff: ReducesArmorBuff) => {
+				let extraDamage = buff.calcValue;
+				if ( buff.calcType === BuffCalcType.Percentage ) {
+					extraDamage = originalDamage * (buff.calcValue/100);
+				}
+				damage += extraDamage;
+				this.history.debug(`[${buff.name}]의 방어력 감소로 인한 추가 데미지 ${extraDamage}`);
+			});
 
+			const reducedDamage = damage;
+			const enhanced = this.buffs.get(BuffType.EnhancedArmor) as EnhancedArmorBuff[];
+			enhanced.forEach((buff: EnhancedArmorBuff) => {
+				let extraDamage = buff.calcValue;
+				if ( buff.calcType === BuffCalcType.Percentage ) {
+					extraDamage = reducedDamage * (buff.calcValue/100);
+				}
+				damage -= extraDamage;
+				this.history.debug(`[${buff.name}]의 방어력 증가로 인한 감소 데미지 ${extraDamage}`);
+			});
+
+			// TODO: 랜덤 편차 딜 계산 +- 5% 추가
 		}
 		return damage;
 	}
 
 	// 플레이어가 공격시 공격력 증가 버프 등으로 계산되는 데미지
-	public calcDamage(damage: number, damageType: DamageType = DamageType.Normal) {
+	public calcDamage(originalDamage: number, damageType: DamageType = DamageType.Normal) {
+		let damage = originalDamage;
 		if ( damageType === DamageType.Normal ) {
+			const reduces = this.buffs.get(BuffType.ReducesDamage) as ReducesDamageBuff[];
+			reduces.forEach((buff: ReducesDamageBuff) => {
+				let extraDamage = buff.calcValue;
+				if ( buff.calcType === BuffCalcType.Percentage ) {
+					extraDamage = originalDamage * (buff.calcValue/100);
+				}
+				damage -= extraDamage;
+				this.history.debug(`[${buff.name}]의 공격력 감소로 인한 감소 데미지 ${extraDamage}`);
+			});
 
+			const reducedDamage = damage;
+			const enhanced = this.buffs.get(BuffType.EnhancedDamage) as EnhancedDamageBuff[];
+			enhanced.forEach((buff: EnhancedDamageBuff) => {
+				let extraDamage = buff.calcValue;
+				if ( buff.calcType === BuffCalcType.Percentage ) {
+					extraDamage = reducedDamage * (buff.calcValue/100);
+				}
+				damage += extraDamage;
+				this.history.debug(`[${buff.name}]의 공격력 증가로 인한 추가 데미지 ${extraDamage}`);
+			});
 		}
 		return damage;
 	}

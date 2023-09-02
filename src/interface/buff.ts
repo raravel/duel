@@ -27,11 +27,28 @@ export abstract class ReducesArmorBuff extends Buff {
 	abstract calcType: BuffCalcType;
 }
 
+export abstract class EnhancedArmorBuff extends Buff {
+	public type = BuffType.EnhancedArmor; // 방어력 증가 버프
+	abstract calcValue: number; // 버프 계산 수치
+	abstract calcType: BuffCalcType;
+}
+
+export abstract class ReducesDamageBuff extends Buff {
+	public type = BuffType.ReducesDamage;
+	abstract calcValue: number;
+	abstract calcType: BuffCalcType;
+}
+
+export abstract class EnhancedDamageBuff extends Buff {
+	public type = BuffType.EnhancedDamage;
+	abstract calcValue: number;
+	abstract calcType: BuffCalcType;
+}
+
 export class PlayerBuff {
 	public buffs: Buff[] = [];
 
 	constructor(private player: Player) {
-		this.initialize = this.initialize.bind(this);
 	}
 
 	public add(buff: Buff): void {
@@ -47,7 +64,10 @@ export class PlayerBuff {
 		}
 	}
 
-	private initialize() {
-
+	public get(buffType?: BuffType): Buff[] {
+		if ( buffType ) {
+			return this.buffs.filter(buff => buff.type === buffType);
+		}
+		return this.buffs;
 	}
 }

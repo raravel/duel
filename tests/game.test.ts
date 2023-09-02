@@ -1,6 +1,8 @@
 import {
     Corrosion,
+    Cull,
     duel,
+    Ghost,
     Meyhem,
     Player,
     ThreeHeadedSnake,
@@ -20,10 +22,18 @@ const deck1 = [
     TwistedFate,
     Meyhem,
     Corrosion,
+    Ghost,
+    Cull,
 ]
 
-deck1.forEach((card) => p1.deckAdd(card));
-deck1.forEach((card) => p2.deckAdd(card));
+const deck2 = [
+    ...deck1,
+    ...deck1,
+    ...deck1,
+];
+
+deck2.forEach((card) => p1.deckAdd(card));
+deck2.forEach((card) => p2.deckAdd(card));
 
 const history = duel(p1, p2);
-console.log(history);
+console.dir(history.history, { maxArrayLength: null });

@@ -2,6 +2,7 @@ import { CardTypes } from "../const/card-type";
 import { Card } from "../interface/card";
 import { Priority } from "../const/priority";
 import { Player } from "../interface/player";
+import { DamageType } from "../const/damage-type";
 
 export class ThreeHeadedSnake extends Card {
 	public name = '삼두사';
@@ -10,14 +11,11 @@ export class ThreeHeadedSnake extends Card {
 	public damage: number = 200;
 
 	trigger(opponent: Player): void {
-		const realDamage = this.player.calcDamage(this.damage);
 		const attacked: number[] = [];
-		attacked.push(opponent.hitDamage(realDamage));
-		attacked.push(opponent.hitDamage(realDamage));
-		attacked.push(opponent.hitDamage(realDamage));
+		attacked.push(this.player.attack(opponent, this.damage, DamageType.Normal));
+		attacked.push(this.player.attack(opponent, this.damage, DamageType.Normal));
+		attacked.push(this.player.attack(opponent, this.damage, DamageType.Normal));
 
-		console.log(this.player.history.uuid, this.player.history, attacked);
-
-		this.player.history.log(`${opponent.name}에게 ${attacked.join(',')}데미지를 입혔습니다.`);
+		this.player.history.log(`[${opponent.name}] 님에게 [${attacked.join('],[')}] 데미지를 입혔습니다.`);
 	}
 }

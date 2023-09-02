@@ -4,8 +4,7 @@ export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const rand = (num=0, min=0) => Math.floor(Math.random() * (num)) + min;
 export const random = (items) => items[rand(items.length)];
 
-export function shuffle<T extends object>(original: T): T {
-    const array = cloneDeep(original);
+export function shuffle<T extends object[]>(array: T): T {
     for (let index = array.length - 1; index > 0; index--) {
         // 무작위 index 값을 만든다. (0 이상의 배열 길이 값)
         const randomPosition = Math.floor(Math.random() * (index + 1));

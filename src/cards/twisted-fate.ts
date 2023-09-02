@@ -22,10 +22,10 @@ export class TwistedFate extends Card {
 		if ( frontCoin.length === 0 ) {
 			const damage = this.player.hitDamage(1000, DamageType.Fixed);
 			this.player.hitted(damage);
-			this.player.history.log(`뒤집어진 운명으로 인해 ${this.player.name}이 ${damage}의 데미지를 입었습니다.`);
+			this.player.history.log(`뒤집어진 운명으로 인해 [${this.player.name}] 님이 [${damage}]의 데미지를 입었습니다.`);
 		} else {
 			const res = frontCoin.map(c => this.player.attack(opponent, 300));
-			this.player.history.log(`정해진 운명이 ${opponent.name}에게 총 ${res.length}회 각각 ${res.join(',')} 데미지를 입혔습니다.`);
+			this.player.history.log(`정해진 운명이 [${opponent.name}] 님에게 총 [${res.length}]회 각각 [${res.join('],[')}] 데미지를 입혔습니다.`);
 		}
 	}
 

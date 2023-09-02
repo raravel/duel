@@ -2,6 +2,8 @@ export enum BuffType {
 	Normal = 'normal',
 	ReducesArmor = 'reduces_armor',
 	EnhancedArmor = 'enhanced_armor',
+	ReducesDamage = 'reduced_damage',
+	EnhancedDamage = 'enhanced_damage',
 }
 
 export enum BuffCalcType {
