@@ -12,7 +12,7 @@ const run = () => {
 
     const pickedItem = randomPick<string>([
         [50, 'item 1'],
-        [25, 'item 2'],
+        //[25, 'item 2'],
         [20, 'item 3'],
         [4.99, 'item 4'],
         [0.01, 'item 5'],

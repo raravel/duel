@@ -4,11 +4,13 @@ export * from './buffs/corrosion';
 export * from './buffs/cull';
 export * from './buffs/ghost';
 export * from './buffs/meyhem';
+export * from './buffs/moon';
 
 export * from './cards/corrosion';
 export * from './cards/cull';
 export * from './cards/ghost';
 export * from './cards/meyhem';
+export * from './cards/moon';
 export * from './cards/reaper';
 export * from './cards/three-headed-snake';
 export * from './cards/twisted-fate';

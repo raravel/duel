@@ -7,7 +7,7 @@ import { random } from "../utils/common";
 export class MeyhemBuff extends Buff {
 	public name = "광기";
 	public type = BuffType.Normal;
-	public keepCount: number = 3;
+	public keepCount: number = 2;
 
 	constructor(protected player: Player) {
 		super(player);
@@ -26,7 +26,7 @@ export class MeyhemBuff extends Buff {
 			this.player.draw(),
 		];
 		this.player.history.log(`[${this.name}] 버프의 효과로 ${cards.map(c => c.name).join(',')} 카드를 추가 드로우 하였습니다.`);
-		
+
 		const card = random(cards);
 		this.player.useCard(card, true);
 		this.player.history.log(`광기에 쌓인 [${card.name}] 카드가 가루로 찢겨 묘지로 이동했습니다.`);

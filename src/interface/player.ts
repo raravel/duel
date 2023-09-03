@@ -14,7 +14,7 @@ export class Player extends EventBinder {
 	public hash: string = '';
 	public opponent!: Player;
 
-	public defaultHp = 3000;
+	public defaultHp = 10000;
 	public hp: number = this.defaultHp;
 	public defaultAttack: number = 500;
 	public history!: HistoryInstance;
@@ -126,6 +126,10 @@ export class Player extends EventBinder {
 
 	public hitted(damage: number) {
 		this.hp -= damage;
+	}
+
+	public heal(hp: number) {
+		this.hp += hp;
 	}
 
 	// 카드 뽑기
