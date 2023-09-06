@@ -46,6 +46,15 @@ export function randomPick<T extends any>(itemArray: RandomPickItem<T>[]): T {
   throw new Error('No item selected.'); // 선택된 아이템이 없는 경우 예외 처리
 }
 
+export function randomMultiple<T extends any>(array: T[], num: number): T[] {
+  const newArray: T[] = [];
+  for (let i=0;i < num;i++) {
+    const [moveItem] = array.splice(rand(array.length),1);
+    newArray.push(moveItem);
+  }
+  return newArray;
+}
+
 export function cardListCopy(player: Player, cardList: Card[]) {
 	const array = cardList;
 	const copied: Card[] = [];

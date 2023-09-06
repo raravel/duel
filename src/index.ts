@@ -7,6 +7,7 @@ export * from './buffs/meyhem';
 export * from './buffs/moon';
 export * from './buffs/star';
 
+export * from './cards/clown';
 export * from './cards/corrosion';
 export * from './cards/cull';
 export * from './cards/ghost';
