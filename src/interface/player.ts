@@ -7,6 +7,7 @@ import { Card } from "./card";
 import { Reaper } from "../cards/reaper";
 import { Class } from "./constructable";
 import { BuffCalcType, BuffType } from "../const/buff-type";
+import { CardTypes } from "src/const/card-type";
 
 
 export class Player extends EventBinder {
@@ -54,7 +55,10 @@ export class Player extends EventBinder {
 			this.history.log(`[${card.name}]카드 사용.`);
 			card.trigger(this.opponent);
 		}
-		this.usedCardList.push(card);
+		if ( card.type !== CardTypes.Reaper ) {
+			// 리퍼 카드는 사용된 카드가 아니기 때문에 묘지에 보내지 않는다.
+			this.usedCardList.push(card);
+		}
 	}
 
 	// 플레이어가 피격시 방어력 감소 버프 등으로 계산되는 데미지

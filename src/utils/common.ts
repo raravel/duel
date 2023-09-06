@@ -1,4 +1,6 @@
-import { cloneDeep } from 'lodash';
+import { Card } from "../interface/card";
+import { Class } from "../interface/constructable";
+import { Player } from "../interface/player";
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const rand = (num=0, min=0) => Math.floor(Math.random() * (num)) + min;
@@ -42,4 +44,14 @@ export function randomPick<T extends any>(itemArray: RandomPickItem<T>[]): T {
   }
 
   throw new Error('No item selected.'); // 선택된 아이템이 없는 경우 예외 처리
+}
+
+export function cardListCopy(player: Player, cardList: Card[]) {
+	const array = cardList;
+	const copied: Card[] = [];
+	for (let i = 0;i < array.length; i++) {
+		const CardConstructor = array[i].constructor as Class<Card>;
+		copied.push(new CardConstructor(player));
+	}
+	return copied;
 }

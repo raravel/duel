@@ -12,6 +12,7 @@ export abstract class Buff {
 	protected refreshWhenReinit = false;
 	public uuid = randomUUID();
 	public priority = Priority.Medium;
+	public isPurificationPossible = true;
 
 	constructor(protected player: Player) {
 
