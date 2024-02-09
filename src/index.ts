@@ -1,5 +1,6 @@
 export * from './game';
 
+export * from './buffs/awake';
 export * from './buffs/corrosion';
 export * from './buffs/cull';
 export * from './buffs/ghost';
@@ -7,6 +8,7 @@ export * from './buffs/meyhem';
 export * from './buffs/moon';
 export * from './buffs/star';
 
+export * from './cards/awake';
 export * from './cards/clown';
 export * from './cards/corrosion';
 export * from './cards/cull';
@@ -26,6 +28,8 @@ export * from './const/damage-type';
 export * from './const/game-event';
 export * from './const/priority';
 export * from './const/target-type';
+
+export * from './engraves/awake';
 
 export * from './interface/buff';
 export * from './interface/card';

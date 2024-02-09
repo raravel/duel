@@ -45,8 +45,8 @@ export class Player extends EventBinder {
 		return this.hp <= 0;
 	}
 
-	public deckAdd(CardConstructor: Class<Card>): void {
-		const card = new CardConstructor(this);
+	public deckAdd(CardConstructor: Class<Card>, ...args: any[]): void {
+		const card = new CardConstructor(this, ...args);
 		this.deck.push(card);
 	}
 

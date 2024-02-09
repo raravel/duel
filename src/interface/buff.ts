@@ -6,7 +6,7 @@ import { Priority } from "../const/priority";
 
 export abstract class Buff {
 	abstract name: string;
-	abstract keepCount: number; // 버프 유지 시간, -1: 무제한. 0: 턴 종료시 끝남., x > 1 : x 턴동안 유지
+	abstract keepCount: number; // 버프 유지 시간, -1: 무제한. 0: 턴 종료시 끝남., x >= 1 : x 턴동안 유지
 	public type = BuffType.Normal;
 	protected currentCount: number = 0;
 	protected refreshWhenReinit = false;

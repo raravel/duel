@@ -26,14 +26,15 @@ export abstract class BuffCard extends Card {
 	public priority: number = Priority.High;
 	abstract buff: Class<Buff>;
 	protected target: TargetType = TargetType.Player;
+	protected args: any[] = [];
 
 	trigger(opponent: Player): void {
 		if ( this.target === TargetType.Player ) {
-			const buff = new this.buff(this.player);
+			const buff = new this.buff(this.player, ...this.args);
 			this.player.buffs.add(buff);
 			this.player.history.log(`[${this.player.name}] 님은 [${buff.name}] 버프를 획득했습니다.`);
 		} else if ( this.target === TargetType.Opponent ) {
-			const buff = new this.buff(opponent);
+			const buff = new this.buff(opponent, ...this.args);
 			opponent.buffs.add(buff);
 			opponent.history.log(`[${opponent.name}] 님에게 [${buff.name}] 버프가 부여되었습니다.`);
 		}
