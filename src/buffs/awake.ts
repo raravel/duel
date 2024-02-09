@@ -9,6 +9,7 @@ export class AwakeBuff extends EnhancedDamageBuff {
     public calcType: BuffCalcType = BuffCalcType.Percentage;
     public calcValue: number = 0; // constructor 에서 초기화
     public keepCount: number = -1;
+    public isPurificationPossible: boolean = false;
 
     constructor(
         protected player: Player,

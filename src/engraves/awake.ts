@@ -1,14 +1,14 @@
-import { Player } from "src/interface/player";
+import { Player } from "../interface/player";
 import { Engrave } from "../interface/engrave";
-import { GameEvents } from "src/const/game-event";
-import { Awake } from "src/cards/awake";
+import { GameEvents } from "../const/game-event";
+import { Awake } from "../cards/awake";
 
 
 export class AwakeEngrave extends Engrave {
     public name = '각성';
     
     trigger(opponent: Player): void {
-        this.player.history.debug(`[${this.name}] 각인을 플레이어 [${this.player}]에게 등록합니다.`)
+        this.player.history.debug(`[${this.name}:${this.level}] 각인을 플레이어 [${this.player}]에게 등록합니다.`)
         this.player.on(GameEvents.INITIALIZE, this.onInitialize.bind(this));
     }
 

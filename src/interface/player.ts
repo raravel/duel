@@ -21,9 +21,7 @@ export class Player extends EventBinder {
 	public history!: HistoryInstance;
 
 	public buffs: PlayerBuff = new PlayerBuff(this); // 버프
-	public debuffs: any[] = []; // 디버프
-	public forceBuffs: any[] = []; // 정화 불가능한 버프
-
+	
 	public deck: Card[] = []; // 플레이어 설정 카드 리스트
 	public cardList: Card[] = []; // 인게임 덱 카드 리스트
 	public usedCardList: Card[] = []; // 묘지 카드 리스트
@@ -123,18 +121,19 @@ export class Player extends EventBinder {
 	public attack(target: Player, damage: number, damageType: DamageType = DamageType.Normal) {
 		const playerDamage = this.calcDamage(damage, damageType);
 		const realDamage = target.hitDamage(playerDamage);
-		this.emit(GameEvents.ATTACK, realDamage);
-		target.emit(GameEvents.HITTED, realDamage);
-		target.hitted(realDamage);
+		this.emit(GameEvents.ATTACK, realDamage, damage, damageType);
+		target.hitted(realDamage, damage, damageType);
 		return realDamage;
 	}
 
-	public hitted(damage: number) {
-		this.hp -= damage;
+	public hitted(realDamage: number, originalDamage: number, originalDamageType: DamageType) {
+		this.hp -= realDamage;
+		this.emit(GameEvents.HITTED, realDamage, originalDamage, originalDamageType);
 	}
 
 	public heal(hp: number) {
 		this.hp += hp;
+		this.emit(GameEvents.HEAL, hp);
 	}
 
 	// 카드 뽑기

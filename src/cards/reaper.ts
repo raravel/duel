@@ -14,7 +14,7 @@ export class Reaper extends Card {
 
 	trigger(opponent: Player): void {
 		const damage = this.player.hitDamage(this.getData(), DamageType.Reaper);
-		this.player.hitted(damage);
+		this.player.hitted(damage, damage, DamageType.Reaper);
 		reaperMemory[this.player.hash] += 50;
 
 		this.player.history.log(`${this.player.name}은 저승사자의 부름으로 인해 ${damage}의 데미지를 입었습니다.`);
