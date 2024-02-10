@@ -14,6 +14,7 @@ export class Player extends EventBinder {
 	public name: string = '';
 	public hash: string = '';
 	public opponent!: Player;
+	public turn: number = 0;
 
 	public defaultHp = 10000;
 	public hp: number = this.defaultHp;

@@ -45,6 +45,9 @@ export function duel(player1: Player, player2: Player) {
 	let turn = 1;
 
 	while ( !player1.isDead && !player2.isDead ) {
+		player1.turn = turn;
+		player2.turn = turn;
+
 		history.log(`플레이어 ${currentTurnPlayer.name}님의 턴 시작 <${turn}>`);
 		currentTurnPlayer.hand = turnDraw(currentTurnPlayer, 5);
 		

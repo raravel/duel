@@ -5,6 +5,7 @@ import { Player } from "../interface/player";
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const rand = (num=0, min=0) => Math.floor(Math.random() * (num)) + min;
 export const random = (items) => items[rand(items.length)];
+export const calcPer = (per, value) => Math.round((value * per) / 100);
 
 export function shuffle<T extends object[]>(array: T): T {
     for (let index = array.length - 1; index > 0; index--) {

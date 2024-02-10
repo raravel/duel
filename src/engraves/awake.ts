@@ -14,6 +14,6 @@ export class AwakeEngrave extends Engrave {
 
     onInitialize(): void {
         this.player.deckAdd(Awake, this.level);
-        this.player.history.log(`[${this.player.name}] 님의 [${this.name}] 각인 효과로 인해 [각성:${this.level}] 카드를 추가했습니다.`);
+        this.player.history.log(`[${this.player.name}] 님의 [${this.name}:${this.level}] 각인 효과로 인해 [각성:${this.level}] 카드를 추가했습니다.`);
     }
 }
